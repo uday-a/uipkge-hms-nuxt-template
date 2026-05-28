@@ -1,0 +1,176 @@
+import { iso, hoursAgo, minutesAgo } from './today'
+
+export interface MockERVisit {
+  id: string
+  patientId: string
+  arrivedAt: string
+  chiefComplaint: string
+  triageLevel: 1 | 2 | 3 | 4 | 5
+  triageNurseUserId: number
+  attendingUserId?: number
+  bayId?: string
+  status: 'waiting' | 'in_triage' | 'in_treatment' | 'admitted' | 'discharged' | 'left_without_seen'
+  disposition?: 'discharged' | 'admitted_ipd' | 'admitted_icu' | 'transferred' | 'expired' | 'lwbs'
+  arrivalMode: 'walk_in' | 'ambulance' | 'transferred'
+  notes?: string
+}
+
+export const ER_BAYS = [
+  { id: 'er-bay-1', label: 'Bay 1 — Resus', type: 'resus' },
+  { id: 'er-bay-2', label: 'Bay 2 — Resus', type: 'resus' },
+  { id: 'er-bay-3', label: 'Bay 3 — Trauma', type: 'trauma' },
+  { id: 'er-bay-4', label: 'Bay 4 — Majors', type: 'majors' },
+  { id: 'er-bay-5', label: 'Bay 5 — Majors', type: 'majors' },
+  { id: 'er-bay-6', label: 'Bay 6 — Minors', type: 'minors' },
+] as const
+
+export const ER_VISITS: MockERVisit[] = [
+  {
+    id: 'er-001',
+    patientId: 'pt-001',
+    arrivedAt: iso(minutesAgo(45)),
+    chiefComplaint: 'Chest pain radiating to left arm',
+    triageLevel: 2,
+    triageNurseUserId: 104,
+    attendingUserId: 102,
+    bayId: 'er-bay-2',
+    status: 'in_treatment',
+    arrivalMode: 'ambulance',
+    notes: 'ECG shows ST elevation. Troponin pending.',
+  },
+  {
+    id: 'er-002',
+    patientId: 'pt-004',
+    arrivedAt: iso(minutesAgo(20)),
+    chiefComplaint: 'Shortness of breath',
+    triageLevel: 2,
+    triageNurseUserId: 105,
+    bayId: 'er-bay-1',
+    status: 'in_triage',
+    arrivalMode: 'ambulance',
+    notes: 'SpO2 88% on room air.',
+  },
+  {
+    id: 'er-003',
+    patientId: 'pt-007',
+    arrivedAt: iso(hoursAgo(2)),
+    chiefComplaint: 'Abdominal pain — right lower quadrant',
+    triageLevel: 3,
+    triageNurseUserId: 106,
+    attendingUserId: 101,
+    bayId: 'er-bay-4',
+    status: 'in_treatment',
+    arrivalMode: 'walk_in',
+    notes: 'Rebound tenderness present. US ordered.',
+  },
+  {
+    id: 'er-004',
+    patientId: 'pt-010',
+    arrivedAt: iso(hoursAgo(3)),
+    chiefComplaint: 'Laceration left forearm',
+    triageLevel: 4,
+    triageNurseUserId: 107,
+    bayId: 'er-bay-6',
+    status: 'in_treatment',
+    arrivalMode: 'walk_in',
+    notes: '8 cm clean laceration from kitchen knife.',
+  },
+  {
+    id: 'er-005',
+    patientId: 'pt-002',
+    arrivedAt: iso(hoursAgo(1)),
+    chiefComplaint: 'Fever and cough for 3 days',
+    triageLevel: 4,
+    triageNurseUserId: 104,
+    status: 'waiting',
+    arrivalMode: 'walk_in',
+  },
+  {
+    id: 'er-006',
+    patientId: 'pt-009',
+    arrivedAt: iso(minutesAgo(90)),
+    chiefComplaint: 'Fall from bicycle — head strike',
+    triageLevel: 3,
+    triageNurseUserId: 105,
+    attendingUserId: 101,
+    bayId: 'er-bay-3',
+    status: 'in_treatment',
+    arrivalMode: 'ambulance',
+    notes: 'GCS 15. Small scalp laceration. CT brain pending.',
+  },
+  {
+    id: 'er-007',
+    patientId: 'pt-005',
+    arrivedAt: iso(hoursAgo(4)),
+    chiefComplaint: 'Asthma exacerbation',
+    triageLevel: 3,
+    triageNurseUserId: 106,
+    attendingUserId: 103,
+    bayId: 'er-bay-5',
+    status: 'in_treatment',
+    arrivalMode: 'walk_in',
+    notes: 'Peak flow 180 L/min. Nebulized salbutamol given.',
+  },
+  {
+    id: 'er-008',
+    patientId: 'pt-003',
+    arrivedAt: iso(hoursAgo(5)),
+    chiefComplaint: 'MVC trauma — neck pain',
+    triageLevel: 2,
+    triageNurseUserId: 107,
+    attendingUserId: 102,
+    bayId: 'er-bay-3',
+    status: 'admitted',
+    disposition: 'admitted_ipd',
+    arrivalMode: 'ambulance',
+    notes: 'C-spine cleared clinically. CTA normal. Admitted for observation.',
+  },
+  {
+    id: 'er-009',
+    patientId: 'pt-008',
+    arrivedAt: iso(hoursAgo(6)),
+    chiefComplaint: 'Fever and rash',
+    triageLevel: 4,
+    triageNurseUserId: 104,
+    status: 'discharged',
+    disposition: 'discharged',
+    arrivalMode: 'walk_in',
+    notes: 'Viral exanthem. Antipyretics and advice given.',
+  },
+  {
+    id: 'er-010',
+    patientId: 'pt-011',
+    arrivedAt: iso(minutesAgo(15)),
+    chiefComplaint: 'Ankle sprain while running',
+    triageLevel: 5,
+    triageNurseUserId: 105,
+    status: 'waiting',
+    arrivalMode: 'walk_in',
+  },
+  {
+    id: 'er-011',
+    patientId: 'pt-012',
+    arrivedAt: iso(hoursAgo(7)),
+    chiefComplaint: 'Poor feeding and lethargy',
+    triageLevel: 2,
+    triageNurseUserId: 106,
+    attendingUserId: 103,
+    bayId: 'er-bay-1',
+    status: 'in_treatment',
+    arrivalMode: 'walk_in',
+    notes: 'Temp 38.2°C. Septic workup initiated.',
+  },
+  {
+    id: 'er-012',
+    patientId: 'pt-006',
+    arrivedAt: iso(hoursAgo(8)),
+    chiefComplaint: 'Foreign body ingestion — coin',
+    triageLevel: 3,
+    triageNurseUserId: 107,
+    attendingUserId: 103,
+    status: 'discharged',
+    disposition: 'discharged',
+    arrivalMode: 'walk_in',
+    notes: 'Coin in stomach on X-ray. Passed spontaneously.',
+  },
+]

@@ -1,0 +1,53 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Playwright MCP screenshots (local debug artifacts)
+.playwright-mcp/
+
+# jscpd duplicate-detection report (local audit artifact)
+.jscpd-report/
+
+# skills.sh CLI working directories. Other-agent copies of skills the
+# CLI auto-generated. Claude Code reads `.claude/skills/` directly;
+# these dirs duplicate the same content for other agents. Regenerate
+# with `npx skills experimental_install` if you use Cursor / Codex /
+# Junie / etc.
+.agents/
+.junie/
+.playwright-mcp
+/*.png
+# Vercel
+.vercel/
+
+# Pilot scratch (moved pages awaiting registry-driven rebuild)
+.pilot-backup/
+.vercel
+.env*.local
+data/
+
+# Internal agent / automation artifacts (local-only, not part of the template)
+ai_docs/
+reports/
+scripts/
